@@ -4,16 +4,27 @@ const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
 class Translator {
-  americanToBritish(word) {
-    if (americanOnly[word]) {
-      return americanOnly[word];
-    } else if (americanToBritishSpelling[word]) {
-      return americanToBritishSpelling[word];
-    } else if (americanToBritishTitles[word]) {
-      return americanToBritishTitles[word];
-    } else {
-      return false;
+  parseText(text, locale) {
+    const textArray = text.split(" ");
+    let result = "";
+    for (let i = 0; i < textArray.length; i++) {
+      if (textArray[i + 1]) {
+        result +=
+          " " + this.americanToBritish(`${textArray[i]} ${textArray[i + 1]}`);
+      } else {
+        result += " " + this.americanToBritish(textArray[i]);
+      }
     }
+    return result;
+  }
+
+  americanToBritish(word) {
+    return (
+      americanOnly[word] ||
+      americanToBritishSpelling[word] ||
+      americanToBritishTitles[word] ||
+      word
+    );
   }
 
   getKeyByValue(object, value) {
@@ -21,15 +32,12 @@ class Translator {
   }
 
   britishToAmerican(word) {
-    if (britishOnly[word]) {
-      return britishOnly[word];
-    } else if (this.getKeyByValue(americanToBritishSpelling, word)) {
-      return this.getKeyByValue(americanToBritishSpelling, word);
-    } else if (this.getKeyByValue(americanToBritishTitles, word)) {
-      return this.getKeyByValue(americanToBritishTitles, word);
-    } else {
-      return false;
-    }
+    return (
+      britishOnly[word] ||
+      this.getKeyByValue(americanToBritishSpelling, word) ||
+      this.getKeyByValue(americanToBritishTitles, word) ||
+      word
+    );
   }
 }
 
