@@ -4,40 +4,56 @@ const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
 class Translator {
-  parseText(text, locale) {
-    const textArray = text.split(" ");
-    let result = "";
-    for (let i = 0; i < textArray.length; i++) {
-      if (textArray[i + 1]) {
-        result +=
-          " " + this.americanToBritish(`${textArray[i]} ${textArray[i + 1]}`);
-      } else {
-        result += " " + this.americanToBritish(textArray[i]);
-      }
+  americanToBritish(text) {
+    let result = text;
+    const timeRegex = /(\d+)(:)(\d+)/g;
+    result = result.replace(timeRegex, `<span class="highlight">$1.$3</span>`);
+    for (let i in americanOnly) {
+      result = result.replace(
+        i,
+        `<span class="highlight">${americanOnly[i]}</span>`
+      );
     }
+    for (let j in americanToBritishSpelling) {
+      result = result.replace(
+        j,
+        `<span class="highlight">${americanToBritishSpelling[j]}</span>`
+      );
+    }
+    for (let k in americanToBritishTitles) {
+      result = result.replace(
+        k,
+        `<span class="highlight">${americanToBritishTitles[k]}</span>`
+      );
+    }
+    if (text == result) return text;
     return result;
   }
 
-  americanToBritish(word) {
-    return (
-      americanOnly[word] ||
-      americanToBritishSpelling[word] ||
-      americanToBritishTitles[word] ||
-      word
-    );
-  }
-
-  getKeyByValue(object, value) {
-    return Object.keys(object).find((key) => object[key] === value);
-  }
-
-  britishToAmerican(word) {
-    return (
-      britishOnly[word] ||
-      this.getKeyByValue(americanToBritishSpelling, word) ||
-      this.getKeyByValue(americanToBritishTitles, word) ||
-      word
-    );
+  britishToAmerican(text) {
+    let result = text;
+    const timeRegex = /(\d+)(,|.)(\d+)/g;
+    result = result.replace(timeRegex, `<span class="highlight">$1:$3</span>`);
+    for (let i in britishOnly) {
+      result = result.replace(
+        i,
+        `<span class="highlight">${britishOnly[i]}</span>`
+      );
+    }
+    for (let j in americanToBritishSpelling) {
+      result = result.replace(
+        americanToBritishSpelling[j],
+        `<span class="highlight">${j}</span>`
+      );
+    }
+    for (let k in americanToBritishTitles) {
+      result = result.replace(
+        americanToBritishTitles[k],
+        `<span class="highlight">${k}</span>`
+      );
+    }
+    if (text == result) return text;
+    return result;
   }
 }
 
