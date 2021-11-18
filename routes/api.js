@@ -9,8 +9,10 @@ module.exports = function (app) {
     const { text, locale } = req.body;
     let translation = "";
     // Need to edit as it only replaces once
-    if (!locale) return res.json({ error: "Required field(s) missing" });
-    if (!text) return res.json({ error: "No text to translate" });
+    if (!locale || !text)
+      return res.json({ error: "Required field(s) missing" });
+    if (text == "" || text == " ")
+      return res.json({ error: "No text to translate" });
 
     switch (locale) {
       case "american-to-british":
