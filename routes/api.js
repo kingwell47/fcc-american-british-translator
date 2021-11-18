@@ -7,10 +7,10 @@ module.exports = function (app) {
 
   app.route("/api/translate").post((req, res) => {
     const { text, locale } = req.body;
-    let testStr = text.replace(/\s/g, "");
-    if (!testStr.length) return res.json({ error: "No text to translate" });
-    if (!locale || !text)
+    if (!locale || !text) {
+      if (text === "") return res.json({ error: "No text to translate" });
       return res.json({ error: "Required field(s) missing" });
+    }
 
     let translation = "";
     switch (locale) {
