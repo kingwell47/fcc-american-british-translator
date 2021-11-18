@@ -8,7 +8,7 @@ module.exports = function (app) {
   app.route("/api/translate").post((req, res) => {
     const { text, locale } = req.body;
     let translation = "";
-
+    // Need to edit as it only replaces once
     if (!locale) return res.json({ error: "Required field(s) missing" });
     if (!text) return res.json({ error: "No text to translate" });
 
@@ -21,6 +21,9 @@ module.exports = function (app) {
         break;
       default:
         return res.json({ error: "Invalid value for locale field" });
+    }
+    if (translation == text) {
+      translation = "Everything looks good to me!";
     }
     return res.json({ text, translation });
   });
