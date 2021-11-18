@@ -11,8 +11,9 @@ module.exports = function (app) {
     // Need to edit as it only replaces once
     if (!locale || !text)
       return res.json({ error: "Required field(s) missing" });
-    if (text == "" || text == " ")
-      return res.json({ error: "No text to translate" });
+
+    let testStr = text.replace(/\s/g, "");
+    if (!testStr.length) return res.json({ error: "No text to translate" });
 
     switch (locale) {
       case "american-to-british":
