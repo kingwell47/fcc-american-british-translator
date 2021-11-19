@@ -5,7 +5,7 @@ const Translator = require("../components/translator.js");
 
 suite("Unit Tests", () => {
   const translator = new Translator();
-  const { americanToBritish, britishToAmerican, makeRegex } = translator;
+  const { americanToBritish, britishToAmerican } = translator;
   suite("Translate American to British", () => {
     // Translate Mangoes are my favorite fruit. to British English
     test("Mangoes are my favorite fruit.", () => {
@@ -80,15 +80,77 @@ suite("Unit Tests", () => {
   });
   suite("Translate British to American", () => {
     // Translate We watched the footie match for a while. to American English
+    test("We watched the footie match for a while.", () => {
+      assert.equal(
+        britishToAmerican("We watched the footie match for a while."),
+        `We watched the <span class=\"highlight\">soccer</span> match for a while.`
+      );
+    });
     // Translate Paracetamol takes up to an hour to work. to American English
+    test("Paracetamol takes up to an hour to work.", () => {
+      assert.equal(
+        britishToAmerican("Paracetamol takes up to an hour to work."),
+        `<span class=\"highlight\">Tylenol</span> takes up to an hour to work.`
+      );
+    });
     // Translate First, caramelise the onions. to American English
+    test("First, caramelise the onions.", () => {
+      assert.equal(
+        britishToAmerican("First, caramelise the onions."),
+        `First, <span class=\"highlight\">caramelize</span> the onions.`
+      );
+    });
     // Translate I spent the bank holiday at the funfair. to American English
+    test("I spent the bank holiday at the funfair.", () => {
+      assert.equal(
+        britishToAmerican("I spent the bank holiday at the funfair."),
+        `I spent the <span class=\"highlight\">public holiday</span> at the <span class=\"highlight\">carnival</span>.`
+      );
+    });
     // Translate I had a bicky then went to the chippy. to American English
+    test("I had a bicky then went to the chippy.", () => {
+      assert.equal(
+        britishToAmerican("I had a bicky then went to the chippy."),
+        `I had a <span class=\"highlight\">cookie</span> then went to the <span class=\"highlight\">fish-and-chip shop</span>.`
+      );
+    });
     // Translate I've just got bits and bobs in my bum bag. to American English
+    test("I've just got bits and bobs in my bum bag.", () => {
+      assert.equal(
+        britishToAmerican("I've just got bits and bobs in my bum bag."),
+        `I've just got <span class=\"highlight\">odds and ends</span> in my <span class=\"highlight\">fanny pack</span>.`
+      );
+    });
     // Translate The car boot sale at Boxted Airfield was called off. to American English
+    test("The car boot sale at Boxted Airfield was called off.", () => {
+      assert.equal(
+        britishToAmerican(
+          "The car boot sale at Boxted Airfield was called off."
+        ),
+        `The <span class=\"highlight\">swap meet</span> at Boxted Airfield was called off.`
+      );
+    });
     // Translate Have you met Mrs Kalyani? to American English
+    test("Have you met Mrs Kalyani?", () => {
+      assert.equal(
+        britishToAmerican("Have you met Mrs Kalyani?"),
+        `Have you met <span class=\"highlight\">Mrs.</span> Kalyani?`
+      );
+    });
     // Translate Prof Joyner of King's College, London. to American English
+    test("Prof Joyner of King's College, London.", () => {
+      assert.equal(
+        britishToAmerican("Prof Joyner of King's College, London."),
+        `<span class=\"highlight\">Prof.</span> Joyner of King's College, London.`
+      );
+    });
     // Translate Tea time is usually around 4 or 4.30. to American English
+    test("Tea time is usually around 4 or 4.30.", () => {
+      assert.equal(
+        britishToAmerican("Tea time is usually around 4 or 4.30."),
+        `Tea time is usually around 4 or <span class=\"highlight\">4:30</span>.`
+      );
+    });
   });
   suite("Highlight translation", () => {
     // Highlight translation in Mangoes are my favorite fruit.
