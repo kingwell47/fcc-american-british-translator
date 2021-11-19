@@ -154,8 +154,32 @@ suite("Unit Tests", () => {
   });
   suite("Highlight translation", () => {
     // Highlight translation in Mangoes are my favorite fruit.
+    test("Highlight translation in Mangoes are my favorite fruit.", () => {
+      assert.equal(
+        americanToBritish("Mangoes are my favorite fruit."),
+        `Mangoes are my <span class=\"highlight\">favourite</span> fruit.`
+      );
+    });
     // Highlight translation in I ate yogurt for breakfast.
+    test("Highlight translation in I ate yogurt for breakfast.", () => {
+      assert.equal(
+        americanToBritish("I ate yogurt for breakfast."),
+        `I ate <span class=\"highlight\">yoghurt</span> for breakfast.`
+      );
+    });
     // Highlight translation in We watched the footie match for a while.
+    test("Highlight translation in We watched the footie match for a while.", () => {
+      assert.equal(
+        britishToAmerican("We watched the footie match for a while."),
+        `We watched the <span class=\"highlight\">soccer</span> match for a while.`
+      );
+    });
     // Highlight translation in Paracetamol takes up to an hour to work.
+    test("Highlight translation in Paracetamol takes up to an hour to work.", () => {
+      assert.equal(
+        britishToAmerican("Paracetamol takes up to an hour to work."),
+        `<span class=\"highlight\">Tylenol</span> takes up to an hour to work.`
+      );
+    });
   });
 });
